@@ -1,10 +1,66 @@
+@font-face {
+  font-family: "stupid-meeting";
+  src: url("assets/fonts/stupid-meeting.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "chicken";
+  src: url("assets/fonts/chicken-quiche.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "organic";
+  src: url("assets/fonts/organic-brand.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "daisy";
+  src: url("assets/fonts/daisywhl.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "molet";
+  src: url("assets/fonts/molet-raenak.ttf") format("truetype");
+}
+
 * {
-  cursor: url(images/star-cursor.png), auto;
+  cursor: url(assets/cursor/star-cursor.png), auto;
 }
 
 body {
   width: 100%;
   height: 100vh;
+}
+
+
+.app-name {
+  font-family: "molet";
+  font-size: 36px;
+  background-image: url("assets/images/circle-fill-yellow.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 35px;
+  text-align: center;
+  line-height: 0.8;
+  
+}
+
+.app-name img {
+  display: inline-block;
+  width: 4%;
+}
+
+.be-name {
+  display: inline-block;
+}
+
+.weather-name {
+  font-family: "stupid-meeting";
+  display: block;
+}
+
+.weather-name {
+  display: block;
 }
 
 .container__weather {
@@ -37,11 +93,14 @@ body {
 }
 
 .current-weather-wrapper {
-  font-family: "Pompiere", cursive;
-  font-size: 18px;
+  font-family: "stupid-meeting";
+  font-size: 20px;
   text-transform: lowercase;
 }
 
+.current-weather-wrapper img {
+  width: 10%;
+}
 .current-weather-description {
 font-size: 18px;
 text-transform: uppercase;
@@ -50,12 +109,13 @@ text-transform: uppercase;
 .current-temperature,
 .current-weather-description,
 .current-city,
+.current-country,
 .current-day,
 .current-time,
 .celsius,
 .fahrenheit,
 .c-weather__day {
-  font-family: "Yeseva One", cursive;
+  font-family: "stupid-meeting";
 }
 
 .current-time {
@@ -71,24 +131,24 @@ text-transform: uppercase;
   margin-bottom: 0;
 }
 
-.current-city {
+.current-place {
   display: flex;
   align-items: flex-end;
   font-size: 66px;
-  letter-spacing: -2px;
   margin-bottom: 0;
   line-height: 1;
 }
 
-.current-city p {
+.current-city {
   display: inline-block;
   margin-left: 5px;
 }
 
 .current-country {
   font-size: 25px;
-  margin: -18px -15px 0;
   display: inline-block;
+  top: -1.5em;
+  right: -5px;
 }
 
 .current-country-bracket {
@@ -99,11 +159,14 @@ text-transform: uppercase;
 .celsius,
 .fahrenheit {
   font-size: 20px;
-  border-radius: 50px;
+  padding: 10px;
   color: #fff;
-  background-color: #000;
   border: none;
   transition: all 0.3s ease-in;
+  background-color: #fff;
+  background-image: url("assets/images/circle-fill-black.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .temperature-scale-dot {
@@ -113,7 +176,9 @@ text-transform: uppercase;
 
 .celsius:hover,
 .fahrenheit:hover {
-  background-color: #ff5d8f;
+  background-image: url("assets/images/circle-fill-yellow.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .c-weather__day {
@@ -125,22 +190,22 @@ text-transform: uppercase;
 }
 
 .c-weather__temperature {
-  font-family: "Glegoo", serif;
+  font-family: "The Girl Next Door";
   font-weight: 700;
-  font-size: 20px;
+  font-size: 24px;
   display: inline-block;
 }
 
 .c-weather__high-temperature {
-  color: #0077b6;
+  color: #8E6DA0;
 }
 
 .c-weather__low-temperature {
-  color: #90caf9;
+  color: #FAC75A;
 }
 
 .c-search input[type="text"] {
-  font-family: "Glegoo", serif;
+  font-family: "daisy";
   font-size: 16px;
   line-height: 2;
   color: #ff5d8f;
@@ -188,21 +253,38 @@ text-transform: uppercase;
 }
 
 footer {
-  font-family: "Pompiere", cursive;
+  font-family: 'The Girl Next Door', cursive;
   text-align: center;
   font-size: 16px;
+  line-height: 1;
+  color: #fff;
+  padding: 20px;
+  background-image: url("assets/images/circle-fill-black.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+footer p {
+  margin: 0;
+}
+
+footer img {
+  display: inline-block;
+  width: 4%;
+  color: #fff;
 }
 
 .github-link, .profile-link {
   text-decoration: none;
   cursor: pointer;
-  color: #ff5d8f;
+  color: #FAC75A;
   padding: 2px;
+  display: inline-block;
+  width: 100%;
 }
 
 .github-link:hover, .profile-link:hover {
-  color: #fff;
-  background-color: #90caf9;
+  color: #ff5d8f;
   padding: 2px;
 }
 

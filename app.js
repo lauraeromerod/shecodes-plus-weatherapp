@@ -1,7 +1,7 @@
 //global variables
 
 const currentTime = document.querySelector(".current-time");
-const currentCity = document.querySelector(".current-city span");
+const currentCity = document.querySelector(".current-city");
 const currentCountry = document.querySelector(".current-country");
 const currentTemperature = document.querySelector(".current-temperature span");
 const currentDescription = document.querySelector(
@@ -12,6 +12,10 @@ const currentTemperatureFeeling = document.querySelector(
 );
 const currentHumidity = document.querySelector(".current-humidity span");
 const currentWind = document.querySelector(".current-wind span");
+
+const currentWeatherIcon = document.querySelector(".weather-icon img");
+const forecastIcon = document.querySelectorAll(".c-weather__icon");
+const forecastWrapper = document.querySelector(".c-weather");
 
 const apiKey = "cd2abf7f3d9b78235a470a550c43025a";
 const baseURLCurrentWeatherData =
@@ -81,8 +85,13 @@ function changeTemperatureNumber() {
     ".c-weather__temperature span"
   );
 
-  const currentTemperatureSpan = document.querySelector(".current-temperature span");
-  changeTemperatureScale(currentTemperatureSpan, currentTemperatureSpan.textContent);
+  const currentTemperatureSpan = document.querySelector(
+    ".current-temperature span"
+  );
+  changeTemperatureScale(
+    currentTemperatureSpan,
+    currentTemperatureSpan.textContent
+  );
 
   for (
     let eachTemperature = 0;
@@ -104,7 +113,7 @@ function convertToFahrenheit(temperature) {
 }
 
 function convertToCelsius(temperature) {
-  return Math.round((temperature - 32) * 5/9);
+  return Math.round(((temperature - 32) * 5) / 9);
 }
 
 function changeTemperatureScale(temperatureElement, temperatureText) {
@@ -119,7 +128,6 @@ function changeTemperatureScale(temperatureElement, temperatureText) {
         ? ""
         : "°"
     }`;
-
   });
 
   celsiusButton.addEventListener("click", function () {
@@ -128,30 +136,46 @@ function changeTemperatureScale(temperatureElement, temperatureText) {
         ? ""
         : "°"
     }`;
-
   });
 }
 
 changeTemperatureNumber();
 
 function getCurrentWeatherData(response) {
-  const { name, sys, main, weather, wind } = response.data;
-  const responseCity = name;
-  const responseCountry = sys.country;
-  const responseTemperature = Math.round(main.temp);
-  const responseWeatherDescription = weather[0].description;
-  const responseTemperatureFeeling = Math.round(main.feels_like);
-  const responseHumidity = main.humidity;
-  const responseWind = Math.round(wind.speed * 3.6);
 
-  currentCity.textContent = responseCity;
-  currentCountry.textContent = responseCountry;
-  currentTemperature.textContent =
-    responseTemperature < 10 ? `0${responseTemperature}` : responseTemperature;
-  currentDescription.textContent = responseWeatherDescription;
-  currentTemperatureFeeling.textContent = `${responseTemperatureFeeling}°`;
-  currentHumidity.textContent = `${responseHumidity}%`;
-  currentWind.textContent = responseWind;
+  if (response.data && Object.keys(response.data).length > 0) {
+    const { name, sys, main, weather, wind } = response.data;
+    const responseCity = name;
+    const responseCountry = sys.country;
+    const responseTemperature = Math.round(main.temp);
+    const responseWeatherDescription = weather[0].description;
+    const responseTemperatureFeeling = Math.round(main.feels_like);
+    const responseHumidity = main.humidity;
+    const responseWind = Math.round(wind.speed * 3.6);
+    const responseIcon = weather[0].icon;
+  
+    currentCity.textContent = responseCity;
+    currentCountry.textContent = responseCountry;
+    currentTemperature.textContent =
+      responseTemperature < 10 && responseTemperature > 0
+        ? `0${responseTemperature}`
+        : responseTemperature;
+    currentDescription.textContent = responseWeatherDescription;
+    currentTemperatureFeeling.textContent = ` ${responseTemperatureFeeling}°`;
+    currentHumidity.textContent = ` ${responseHumidity}%`;
+    currentWind.textContent = ` ${responseWind} km/h`;
+    iconSwitcher(responseIcon, currentWeatherIcon);
+  } else {
+    currentCity.textContent = "Whoops!";
+    currentCountry.textContent = "";
+    currentTemperature.textContent = "";
+    currentDescription.textContent = "we couldn't find the city...";
+    currentTemperatureFeeling.textContent = "";
+    currentHumidity.textContent = "";
+    currentWind.textContent = "";
+    forecastWrapper.textContent = "";
+    iconSwitcher("", currentWeatherIcon);
+  }
 }
 
 function getAPIURL(lat, lon) {
@@ -174,13 +198,17 @@ searchCity.addEventListener("submit", function (event) {
   const apiURLGeocodingDirect = `${baseURLGeocodingDirect}${typedCityValue}&limit=5&appid=${apiKey}`;
 
   axios.get(apiURLGeocodingDirect).then(function (response) {
-    const { lat, lon, name } = response.data[0];
-    const apiURLCurrentWeatherData = getAPIURL(lat, lon);
+    if (response.data && response.data[0]) {
+      const { lat, lon, name } = response.data[0];
+      const apiURLCurrentWeatherData = getAPIURL(lat, lon);
 
-    axios.get(apiURLCurrentWeatherData).then(function (response) {
-      getCurrentWeatherData(response);
-      currentCity.textContent = name;
-    });
+      axios.get(apiURLCurrentWeatherData).then(function (response) {
+        getCurrentWeatherData(response);
+        currentCity.textContent = name;
+      });
+    } else {
+      getCurrentWeatherData({});
+    }
   });
 
   typedCity.value = "";
@@ -217,3 +245,70 @@ function weatherWrapperTemplate() {
 <span class="current-weather-dot">··</span>
  `;
 } */
+
+const iconSwitcher = (icon, image) => {
+  const iconPath = "assets/icons/";
+
+  switch (icon) {
+    case "01d":
+      image.src = `${iconPath}01d-clear-sun.gif`;
+      image.alt = "clear sky";
+      break;
+    case "01n":
+      image.src = `${iconPath}01n-clear-moon.png`;
+      image.alt = "clear sky";
+      break;
+    case "02d":
+      image.src = `${iconPath}02d-few-clouds.gif`;
+      image.alt = "few clouds";
+      break;
+    case "02n":
+      image.src = `${iconPath}02n-few-clouds.gif`;
+      image.alt = "few clouds";
+      break;
+    case "03d":
+    case "03n":
+      image.src = `${iconPath}03d-03n-clouds.png`;
+      image.alt = "clouds";
+      break;
+    case "04d":
+    case "04n":
+      image.src = `${iconPath}04d-04n-broken-clouds.png`;
+      image.alt = "broken clouds";
+      break;
+    case "09d":
+    case "09n":
+    case "10d":
+    case "10n":
+      image.src = `${iconPath}09d-09n-10d-10n-rain.gif`;
+      image.alt = "rain";
+      break;
+    case "11d":
+    case "11n":
+      image.src = `${iconPath}11d-11n-thunderstorm.gif`;
+      image.alt = "thunderstorm";
+      break;
+    case "13d":
+    case "13n":
+      image.src = `${iconPath}13d-13n-snow.png`;
+      image.alt = "snow";
+      break;
+    case "50d":
+    case "50n":
+      image.src = `${iconPath}50d-50n-mist-fog-dust.png`;
+      image.alt = "mist";
+      break;
+    default:
+      image.src = `${iconPath}404.png`;
+      image.alt = "not found";
+      break;
+  }
+};
+
+function updateForecastIcons() {
+  forecastIcon.forEach((element) => {
+    iconSwitcher("", element);
+  });
+}
+
+updateForecastIcons();
