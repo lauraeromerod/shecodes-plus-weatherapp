@@ -14,7 +14,6 @@ const currentHumidity = document.querySelector(".current-humidity span");
 const currentWind = document.querySelector(".current-wind span");
 
 const currentWeatherIcon = document.querySelector(".weather-icon img");
-const forecastIcon = document.querySelectorAll(".c-weather__icon");
 const forecastWrapper = document.querySelector(".c-weather");
 
 const apiKey = "cd2abf7f3d9b78235a470a550c43025a";
@@ -22,6 +21,7 @@ const baseURLCurrentWeatherData =
   "https://api.openweathermap.org/data/2.5/weather?";
 const baseURLGeocodingDirect =
   "https://api.openweathermap.org/geo/1.0/direct?q=";
+const baseURLOneCall = "https://api.openweathermap.org/data/2.5/onecall?";
 const apiTemperatureUnitCelsius = "metric";
 const apiTemperatureUnitFahrenheit = "imperial";
 
@@ -39,8 +39,7 @@ function setCurrentTime() {
 setCurrentTime();
 window.setInterval(setCurrentTime, 1000);
 
-function setDay() {
-  let nextDays = document.querySelectorAll(".c-weather__day");
+function setCurrentDate() {
   let currentDate = new Date(); //this provides the current date
   let currentDay = document.querySelector(".current-day");
   currentDay.innerHTML = new Intl.DateTimeFormat("en-US", {
@@ -48,6 +47,13 @@ function setDay() {
     month: "long",
     day: "numeric",
   }).format(currentDate);
+}
+
+setCurrentDate();
+
+/* function setDay() {
+  let nextDays = document.querySelectorAll(".c-weather__day");
+  
 
   for (let day = 0; day < 6; day++) {
     let nextDayElement = nextDays[day]; // 6 elements c-weather__day
@@ -62,7 +68,7 @@ function setDay() {
     nextDayElement.innerHTML = nextDayName;
   }
 }
-setDay();
+setDay(); */
 
 /* let formattedCity = (city) => {
   if (!city) {
@@ -142,7 +148,6 @@ function changeTemperatureScale(temperatureElement, temperatureText) {
 changeTemperatureNumber();
 
 function getCurrentWeatherData(response) {
-
   if (response.data && Object.keys(response.data).length > 0) {
     const { name, sys, main, weather, wind } = response.data;
     const responseCity = name;
@@ -153,7 +158,8 @@ function getCurrentWeatherData(response) {
     const responseHumidity = main.humidity;
     const responseWind = Math.round(wind.speed * 3.6);
     const responseIcon = weather[0].icon;
-  
+    const iconObject = iconSwitcher(responseIcon);
+
     currentCity.textContent = responseCity;
     currentCountry.textContent = responseCountry;
     currentTemperature.textContent =
@@ -164,7 +170,8 @@ function getCurrentWeatherData(response) {
     currentTemperatureFeeling.textContent = ` ${responseTemperatureFeeling}°`;
     currentHumidity.textContent = ` ${responseHumidity}%`;
     currentWind.textContent = ` ${responseWind} km/h`;
-    iconSwitcher(responseIcon, currentWeatherIcon);
+    currentWeatherIcon.setAttribute("src", iconObject.src)
+    currentWeatherIcon.setAttribute("alt", iconObject.alt)
   } else {
     currentCity.textContent = "Whoops!";
     currentCountry.textContent = "";
@@ -174,19 +181,54 @@ function getCurrentWeatherData(response) {
     currentHumidity.textContent = "";
     currentWind.textContent = "";
     forecastWrapper.textContent = "";
-    iconSwitcher("", currentWeatherIcon);
+    iconSwitcher("");
   }
 }
 
-function getAPIURL(lat, lon) {
-  return `${baseURLCurrentWeatherData}lat=${lat}&lon=${lon}&appid=${apiKey}&units=${apiTemperatureUnitCelsius}`;
+function getForecastWeatherData(response) {
+  const { daily } = response.data;
+  forecastWrapper.innerHTML = ""
+  for (let index = 1; index < daily.length - 1; index++) {
+    console.log(daily[index]);
+    const { temp, weather, dt } = daily[index];
+    const highTemperature = Math.round(temp.max);
+    const lowTemperature = Math.round(temp.min);
+    const weatherIcon = weather[0].icon;
+    const iconObject = iconSwitcher(weatherIcon);
+    const day = new Date(dt * 1000);
+    const formattedDay = new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+    }).format(day);
+
+    forecastWrapper.innerHTML += `<div class="col-6 col-md-4 mb-3">
+    <div class="c-weather__box">
+    <h3 class="c-weather__day c-weather__day--active">${formattedDay}</h3>
+    <p class="c-weather__temperature">
+      <span class="c-weather__high-temperature">${highTemperature}°</span>
+      <span class="c-weather__low-temperature">${lowTemperature}°</span>
+    </p>
+    <img src="${iconObject.src}" alt="${iconObject.alt}" class="c-weather__icon" />
+  </div>
+  </div>`;
+
+  }
+}
+
+function getAPIURL(baseURL, lat, lon) {
+  return `${baseURL}lat=${lat}&lon=${lon}&appid=${apiKey}&units=${apiTemperatureUnitCelsius}`;
 }
 
 function getWeatherByCurrentLocation() {
   navigator.geolocation.getCurrentPosition(function (pos) {
     const { latitude, longitude } = pos.coords;
-    const apiURLCurrentWeatherData = getAPIURL(latitude, longitude);
+    const apiURLCurrentWeatherData = getAPIURL(
+      baseURLCurrentWeatherData,
+      latitude,
+      longitude
+    );
+    const apiURLOneCall = getAPIURL(baseURLOneCall, latitude, longitude);
     axios.get(apiURLCurrentWeatherData).then(getCurrentWeatherData);
+    axios.get(apiURLOneCall).then(getForecastWeatherData);
   });
 }
 getWeatherByCurrentLocation();
@@ -200,12 +242,15 @@ searchCity.addEventListener("submit", function (event) {
   axios.get(apiURLGeocodingDirect).then(function (response) {
     if (response.data && response.data[0]) {
       const { lat, lon, name } = response.data[0];
-      const apiURLCurrentWeatherData = getAPIURL(lat, lon);
+      const apiURLCurrentWeatherData = getAPIURL(baseURLCurrentWeatherData, lat, lon);
+      const apiURLOneCall = getAPIURL(baseURLOneCall, lat, lon);
+
 
       axios.get(apiURLCurrentWeatherData).then(function (response) {
         getCurrentWeatherData(response);
         currentCity.textContent = name;
       });
+      axios.get(apiURLOneCall).then(getForecastWeatherData);
     } else {
       getCurrentWeatherData({});
     }
@@ -246,69 +291,80 @@ function weatherWrapperTemplate() {
  `;
 } */
 
-const iconSwitcher = (icon, image) => {
+const iconSwitcher = (icon) => {
   const iconPath = "assets/icons/";
 
   switch (icon) {
     case "01d":
-      image.src = `${iconPath}01d-clear-sun.gif`;
-      image.alt = "clear sky";
-      break;
+      return {
+        src: `${iconPath}01d-clear-sun.gif`,
+        alt: "clear sky",
+      };
     case "01n":
-      image.src = `${iconPath}01n-clear-moon.png`;
-      image.alt = "clear sky";
-      break;
+      return {
+        src: `${iconPath}01n-clear-moon.png`,
+        alt: "clear sky",
+      };
     case "02d":
-      image.src = `${iconPath}02d-few-clouds.gif`;
-      image.alt = "few clouds";
-      break;
+      return {
+        src: `${iconPath}02d-few-clouds.gif`,
+        alt: "few clouds",
+      };
     case "02n":
-      image.src = `${iconPath}02n-few-clouds.gif`;
-      image.alt = "few clouds";
-      break;
+      return {
+        src: `${iconPath}02n-few-clouds.gif`,
+        alt: "few clouds",
+      };
     case "03d":
     case "03n":
-      image.src = `${iconPath}03d-03n-clouds.png`;
-      image.alt = "clouds";
-      break;
+      return {
+        src: `${iconPath}03d-03n-clouds.png`,
+        alt: "clouds",
+      };
     case "04d":
     case "04n":
-      image.src = `${iconPath}04d-04n-broken-clouds.png`;
-      image.alt = "broken clouds";
-      break;
+      return {
+        src: `${iconPath}04d-04n-broken-clouds.png`,
+        alt: "broken clouds",
+      };
     case "09d":
     case "09n":
     case "10d":
     case "10n":
-      image.src = `${iconPath}09d-09n-10d-10n-rain.gif`;
-      image.alt = "rain";
-      break;
+      return {
+        src: `${iconPath}09d-09n-10d-10n-rain.gif`,
+        alt: "rain",
+      };
     case "11d":
     case "11n":
-      image.src = `${iconPath}11d-11n-thunderstorm.gif`;
-      image.alt = "thunderstorm";
-      break;
+      return {
+        src: `${iconPath}11d-11n-thunderstorm.gif`,
+        alt: "thunderstorm",
+      };
     case "13d":
     case "13n":
-      image.src = `${iconPath}13d-13n-snow.png`;
-      image.alt = "snow";
-      break;
+      return {
+        src: `${iconPath}13d-13n-snow.png`,
+        alt: "snow",
+      };
     case "50d":
     case "50n":
-      image.src = `${iconPath}50d-50n-mist-fog-dust.png`;
-      image.alt = "mist";
-      break;
+      return {
+        src: `${iconPath}50d-50n-mist-fog-dust.png`,
+        alt: "mist",
+      };
     default:
-      image.src = `${iconPath}404.png`;
-      image.alt = "not found";
-      break;
+      return {
+        src: `${iconPath}404.png`,
+        alt: "not found",
+      };
   }
 };
 
-function updateForecastIcons() {
+/* function updateForecastIcons() {
   forecastIcon.forEach((element) => {
     iconSwitcher("", element);
   });
 }
 
-updateForecastIcons();
+updateForecastIcons(); */

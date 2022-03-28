@@ -32,7 +32,6 @@ body {
   height: 100vh;
 }
 
-
 .app-name {
   font-family: "molet";
   font-size: 36px;
@@ -42,7 +41,6 @@ body {
   padding: 35px;
   text-align: center;
   line-height: 0.8;
-  
 }
 
 .app-name img {
@@ -79,7 +77,6 @@ body {
   margin-bottom: 0;
   line-height: 1;
   position: relative;
-  
 }
 .current-temperature__symbol {
   font-size: 95px;
@@ -102,8 +99,8 @@ body {
   width: 10%;
 }
 .current-weather-description {
-font-size: 18px;
-text-transform: uppercase;
+  font-size: 18px;
+  text-transform: uppercase;
 }
 
 .current-temperature,
@@ -185,6 +182,8 @@ text-transform: uppercase;
   font-size: 28px;
   text-transform: uppercase;
   letter-spacing: -1px;
+  color: #fac75a;
+  opacity: 0.7;
   display: inline-block;
   padding-right: 10px;
 }
@@ -197,11 +196,11 @@ text-transform: uppercase;
 }
 
 .c-weather__high-temperature {
-  color: #8E6DA0;
+  color: #8e6da0;
 }
 
 .c-weather__low-temperature {
-  color: #FAC75A;
+  color: #fac75a;
 }
 
 .c-search input[type="text"] {
@@ -253,7 +252,7 @@ text-transform: uppercase;
 }
 
 footer {
-  font-family: 'The Girl Next Door', cursive;
+  font-family: "The Girl Next Door", cursive;
   text-align: center;
   font-size: 16px;
   line-height: 1;
@@ -268,26 +267,21 @@ footer p {
   margin: 0;
 }
 
-footer img {
-  display: inline-block;
-  width: 4%;
-  color: #fff;
-}
-
-.github-link, .profile-link {
+.github-link,
+.profile-link {
   text-decoration: none;
   cursor: pointer;
-  color: #FAC75A;
+  color: #fac75a;
   padding: 2px;
   display: inline-block;
   width: 100%;
 }
 
-.github-link:hover, .profile-link:hover {
+.github-link:hover,
+.profile-link:hover {
   color: #ff5d8f;
   padding: 2px;
 }
-
 
 @keyframes weather-icon {
   0% {
