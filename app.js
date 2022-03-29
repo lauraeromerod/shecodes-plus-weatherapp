@@ -16,6 +16,10 @@ const currentWind = document.querySelector(".current-wind span");
 const currentWeatherIcon = document.querySelector(".weather-icon img");
 const forecastWrapper = document.querySelector(".c-weather");
 
+const errorMessage = document.querySelector(".error-message");
+const firstColumnWrapper = document.querySelector(".current-weather-data");
+const thirdColumnWrapper = document.querySelector(".current-weather-wrapper");
+
 const apiKey = "cd2abf7f3d9b78235a470a550c43025a";
 const baseURLCurrentWeatherData =
   "https://api.openweathermap.org/data/2.5/weather?";
@@ -123,8 +127,8 @@ function convertToCelsius(temperature) {
 }
 
 function changeTemperatureScale(temperatureElement, temperatureText) {
-  let celsiusButton = document.querySelector(".celsius");
-  let fahrenheitButton = document.querySelector(".fahrenheit");
+  const celsiusButton = document.querySelector(".celsius");
+  const fahrenheitButton = document.querySelector(".fahrenheit");
 
   fahrenheitButton.addEventListener("click", function () {
     temperatureElement.innerHTML = `${convertToFahrenheit(temperatureText)}
@@ -160,6 +164,9 @@ function getCurrentWeatherData(response) {
     const responseIcon = weather[0].icon;
     const iconObject = iconSwitcher(responseIcon);
 
+    errorMessage.style.display = "none";
+    firstColumnWrapper.style.display = "block";
+    thirdColumnWrapper.style.display = "block";
     currentCity.textContent = responseCity;
     currentCountry.textContent = responseCountry;
     currentTemperature.textContent =
@@ -170,24 +177,26 @@ function getCurrentWeatherData(response) {
     currentTemperatureFeeling.textContent = ` ${responseTemperatureFeeling}°`;
     currentHumidity.textContent = ` ${responseHumidity}%`;
     currentWind.textContent = ` ${responseWind} km/h`;
-    currentWeatherIcon.setAttribute("src", iconObject.src)
-    currentWeatherIcon.setAttribute("alt", iconObject.alt)
+    currentWeatherIcon.setAttribute("src", iconObject.src);
+    currentWeatherIcon.setAttribute("alt", iconObject.alt);
   } else {
+    firstColumnWrapper.style.display = "none";
+    thirdColumnWrapper.style.display = "none";
     currentCity.textContent = "Whoops!";
     currentCountry.textContent = "";
-    currentTemperature.textContent = "";
-    currentDescription.textContent = "we couldn't find the city...";
-    currentTemperatureFeeling.textContent = "";
-    currentHumidity.textContent = "";
-    currentWind.textContent = "";
+    errorMessage.style.display = "block";
+    errorMessage.textContent =
+      "sorry, we couldn't find the city... let's try again!";
     forecastWrapper.textContent = "";
-    iconSwitcher("");
+    const iconObject = iconSwitcher("");
+    currentWeatherIcon.setAttribute("src", iconObject.src);
+    currentWeatherIcon.setAttribute("alt", iconObject.alt);
   }
 }
 
 function getForecastWeatherData(response) {
   const { daily } = response.data;
-  forecastWrapper.innerHTML = ""
+  forecastWrapper.innerHTML = "";
   for (let index = 1; index < daily.length - 1; index++) {
     console.log(daily[index]);
     const { temp, weather, dt } = daily[index];
@@ -210,7 +219,6 @@ function getForecastWeatherData(response) {
     <img src="${iconObject.src}" alt="${iconObject.alt}" class="c-weather__icon" />
   </div>
   </div>`;
-
   }
 }
 
@@ -242,9 +250,12 @@ searchCity.addEventListener("submit", function (event) {
   axios.get(apiURLGeocodingDirect).then(function (response) {
     if (response.data && response.data[0]) {
       const { lat, lon, name } = response.data[0];
-      const apiURLCurrentWeatherData = getAPIURL(baseURLCurrentWeatherData, lat, lon);
+      const apiURLCurrentWeatherData = getAPIURL(
+        baseURLCurrentWeatherData,
+        lat,
+        lon
+      );
       const apiURLOneCall = getAPIURL(baseURLOneCall, lat, lon);
-
 
       axios.get(apiURLCurrentWeatherData).then(function (response) {
         getCurrentWeatherData(response);
