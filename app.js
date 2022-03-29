@@ -1,5 +1,7 @@
 //global variables
-
+const responseContainer = document.querySelector(
+  ".container__weather--response"
+);
 const currentTime = document.querySelector(".current-time");
 const currentCity = document.querySelector(".current-city");
 const currentCountry = document.querySelector(".current-country");
@@ -151,6 +153,8 @@ function changeTemperatureScale(temperatureElement, temperatureText) {
 
 changeTemperatureNumber();
 
+responseContainer.style.display = "none";
+
 function getCurrentWeatherData(response) {
   if (response.data && Object.keys(response.data).length > 0) {
     const { name, sys, main, weather, wind } = response.data;
@@ -165,6 +169,7 @@ function getCurrentWeatherData(response) {
     const iconObject = iconSwitcher(responseIcon);
 
     errorMessage.style.display = "none";
+    responseContainer.style.display = "block";
     firstColumnWrapper.style.display = "block";
     thirdColumnWrapper.style.display = "block";
     currentCity.textContent = responseCity;
@@ -180,6 +185,7 @@ function getCurrentWeatherData(response) {
     currentWeatherIcon.setAttribute("src", iconObject.src);
     currentWeatherIcon.setAttribute("alt", iconObject.alt);
   } else {
+    responseContainer.style.display = "block";
     firstColumnWrapper.style.display = "none";
     thirdColumnWrapper.style.display = "none";
     currentCity.textContent = "Whoops!";
@@ -210,7 +216,7 @@ function getForecastWeatherData(response) {
     }).format(day);
 
     forecastWrapper.innerHTML += `<div class="col-6 col-md-4 mb-3">
-    <div class="c-weather__box">
+    <div class="c-weather__box c-weather__box--${index}">
     <h3 class="c-weather__day c-weather__day--active">${formattedDay}</h3>
     <p class="c-weather__temperature">
       <span class="c-weather__high-temperature">${highTemperature}°</span>

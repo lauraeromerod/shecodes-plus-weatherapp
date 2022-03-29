@@ -26,69 +26,9 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
   <body>
-    <div class="row align-items-center justify-content-between mb-3 mt-2"></div>
     <div class="container__weather">
-      <div
-        class="row align-items-start justify-content-between current-weather-header"
-      >
-        <div class="col-12 col-md-8 text-start">
-          <h1 class="current-place">
-            <span class="current-city"></span>
-            <span><sup class="current-country"></sup></span>
-          </h1>
-        </div>
-        <div class="col-12 col-md-4 text-end">
-          <h2>
-            <p class="current-time"></p>
-            <p class="current-day"></p>
-          </h2>
-        </div>
-      </div>
-      <div class="row align-items-center justify-content-between mb-3">
-        <div class="col-12 col-md-4">
-          <p class="error-message"></p>
-          <div class="current-weather-data">
-            <p class="current-temperature">
-              <span class="current-temperature-number"></span>
-              <sup class="current-temperature__symbol">·</sup>
-            </p>
-            <p class="current-weather-description"></p>
-            <button class="celsius">
-              <sup class="temperature-scale-dot">·</sup>C
-            </button>
-            <button class="fahrenheit">
-              <sup class="temperature-scale-dot">·</sup>F
-            </button>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <div class="weather-icon">
-            <img src="" alt="" />
-          </div>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <div class="current-weather-wrapper">
-            <p class="current-temperature-feeling">
-              <i class="fa-solid fa-temperature-half fa-fade"></i><span></span>
-            </p>
-            <p class="current-humidity">
-              <i class="fa-solid fa-droplet fa-fade"></i><span></span>
-            </p>
-            <p class="current-wind">
-              <i class="fa-solid fa-wind fa-fade"></i><span></span>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="row align-items-center justify-content-between c-weather mb-3"
-      ></div>
-
-      <div class="row align-items-center justify-content-between mb-4">
-        <div class="col-6">
+      <div class="row align-items-center mb-5 mt-4">
+        <div class="col-6 align-items-start">
           <h1 class="app-name">
             <span class="be-name">be</span>
             <img src="assets/images/heart-black.svg" alt="decoration" />
@@ -97,7 +37,7 @@
             <span class="ready-name">ready</span>
           </h1>
         </div>
-        <div class="col-6">
+        <div class="col-6 align-items-center">
           <form class="form-horizontal c-search mb-3">
             <input
               type="text"
@@ -106,7 +46,7 @@
               class="typed-city"
             />
             <button class="c-search__submit" type="submit">
-              <i class="fa-regular fa-star fa-beat-fade"></i>
+              <i class="fa-solid fa-magnifying-glass fa-beat-fade"></i>
             </button>
             <button class="c-search__location">
               <i class="fa-solid fa-location-dot fa-beat-fade"></i>
@@ -114,27 +54,88 @@
           </form>
         </div>
       </div>
-      <div class="row align-items-center justify-content-between mb-3">
-        <div class="col-12">
-          <footer>
-            <p>
-              <a
-                target="_blank"
-                class="github-link"
-                href="https://github.com/lauraeromerod/shecodes-plus-weatherapp"
-                >Coded</a
-              >
-              with ❤ by
-              <a
-                target="_blank"
-                class="profile-link"
-                href="https://www.linkedin.com/in/lauraeromerod/"
-                >Laura</a
-              >
-            </p>
-          </footer>
+
+      <div class="container__weather--response">
+        <div
+          class="row align-items-start justify-content-between current-weather-header mb-4"
+        >
+          <div class="col-12 col-md-8 text-start">
+            <h1 class="current-place">
+              <span class="current-city"></span>
+              <span><sup class="current-country"></sup></span>
+            </h1>
+          </div>
+          <div class="col-12 col-md-4 text-end">
+            <h2>
+              <p class="current-time"></p>
+              <p class="current-day"></p>
+            </h2>
+          </div>
         </div>
+        <div class="row align-items-center justify-content-between mb-4">
+          <div class="col-12 col-md-4">
+            <p class="error-message"></p>
+            <div class="current-weather-data">
+              <p class="current-temperature">
+                <span class="current-temperature-number"></span>
+                <sup class="current-temperature__symbol">·</sup>
+              </p>
+              <p class="current-weather-description"></p>
+              <button class="celsius">
+                <sup class="temperature-scale-dot">·</sup>C
+              </button>
+              <button class="fahrenheit">
+                <sup class="temperature-scale-dot">·</sup>F
+              </button>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="weather-icon">
+              <img src="" alt="" />
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="current-weather-wrapper">
+              <p class="current-temperature-feeling">
+                <i class="fa-solid fa-temperature-half fa-fade"></i
+                ><span></span>
+              </p>
+              <p class="current-humidity">
+                <i class="fa-solid fa-droplet fa-fade"></i><span></span>
+              </p>
+              <p class="current-wind">
+                <i class="fa-solid fa-wind fa-fade"></i><span></span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="row align-items-center justify-content-between c-weather mb-3"
+        ></div>
       </div>
+    </div>
+
+    <div class="col-12">
+      <footer>
+        <p>
+          <a
+            target="_blank"
+            class="github-link"
+            href="https://github.com/lauraeromerod/shecodes-plus-weatherapp"
+            >Coded</a
+          >
+          with ❤ by
+          <a
+            target="_blank"
+            class="profile-link"
+            href="https://www.linkedin.com/in/lauraeromerod/"
+            >Laura</a
+          >
+        </p>
+      </footer>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
