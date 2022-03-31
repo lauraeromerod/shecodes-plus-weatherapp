@@ -227,6 +227,11 @@ body {
   transition: all 0.3s ease-in;
 }
 
+.c-weather__box div {
+  display: flex;
+  justify-content: space-between;
+}
+
 .c-weather__box--1,
 .c-weather__box--6,
 .c-weather__box--3:hover,
