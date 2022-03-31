@@ -32,6 +32,12 @@ body {
   height: 100vh;
 }
 
+.container__weather {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 .app-name {
   font-family: "molet";
   font-size: 36px;
@@ -58,47 +64,17 @@ body {
   display: block;
 }
 
-.container__weather {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.current-weather-header {
-  margin-bottom: 0;
-}
-.current-temperature {
-  font-size: 100px;
-  letter-spacing: -4px;
-  display: inline-block;
-  margin-bottom: 0;
+.current-time {
+  font-size: 46px;
   line-height: 1;
-  position: relative;
-}
-.current-temperature__symbol {
-  font-size: 95px;
-  right: -21px;
-  top: 17px;
-  position: absolute;
+  margin-bottom: 0;
 }
 
-.current-weather-data {
-  text-align: center;
-}
-
-.current-weather-wrapper {
-  font-family: "stupid-meeting";
-  font-size: 22px;
-  text-transform: lowercase;
-}
-
-.current-weather-wrapper img {
-  width: 10%;
-}
-.current-weather-description {
-  font-size: 18px;
+.current-day {
+  font-size: 16px;
+  line-height: 1;
   text-transform: uppercase;
-  margin: 0;
+  margin-bottom: 0;
 }
 
 .current-temperature,
@@ -111,19 +87,6 @@ body {
 .fahrenheit,
 .c-weather__day {
   font-family: "stupid-meeting";
-}
-
-.current-time {
-  font-size: 46px;
-  line-height: 1;
-  margin-bottom: 0;
-}
-
-.current-day {
-  font-size: 16px;
-  line-height: 1;
-  text-transform: uppercase;
-  margin-bottom: 0;
 }
 
 .current-place {
@@ -146,11 +109,30 @@ body {
   right: -5px;
 }
 
-.error-message {
-  font-family: "daisy";
+.current-weather-data {
+  text-align: center;
+}
+
+.current-temperature {
+  font-size: 100px;
+  letter-spacing: -4px;
+  display: inline-block;
+  margin-bottom: 0;
+  line-height: 1;
+  position: relative;
+}
+
+.current-temperature__symbol {
+  font-size: 95px;
+  right: -21px;
+  top: 17px;
+  position: absolute;
+}
+
+.current-weather-description {
   font-size: 18px;
-  color: #fac75a;
-  padding: 20px 10px;
+  text-transform: uppercase;
+  margin: 0;
 }
 
 .celsius,
@@ -178,13 +160,40 @@ body {
   background-position: center;
 }
 
+.weather-icon img {
+  max-width: 180px;
+  animation: weather-icon 2s linear infinite alternate;
+  text-align: center;
+}
+
+.current-weather-wrapper {
+  font-family: "stupid-meeting";
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.current-weather-wrapper div {
+  width: 50%;
+}
+
+.scale-dot {
+  font-size: 30px;
+  top: -1px;
+  right: 3px;
+}
+
+.error-message {
+  font-family: "daisy";
+  font-size: 18px;
+  color: #fac75a;
+  padding: 20px 10px;
+}
+
 .c-weather__box {
   border-radius: 10px;
   padding: 15px;
   transition: all 0.3s ease-in;
-}
-
-.c-weather__box:hover {
 }
 
 .c-weather__box--1,
@@ -215,13 +224,25 @@ body {
   color: #8e6da0;
   display: inline-block;
   padding-right: 10px;
+  margin-bottom: 0;
+}
+
+.c-weather__description {
+  font-family: "The Girl Next Door";
+  font-size: 16px;
+  color: #8e6da0;
+  opacity: 0.5;
+  display: block;
+  margin-bottom: 10px;
+  line-height: 1.5;
 }
 
 .c-weather__temperature {
   font-family: "The Girl Next Door";
-  font-weight: 700;
   font-size: 24px;
   display: inline-block;
+  margin-bottom: 0;
+  line-height: 1;
 }
 
 .c-weather__high-temperature {
@@ -230,6 +251,12 @@ body {
 
 .c-weather__low-temperature {
   color: #fac75a;
+}
+
+.c-weather__icon {
+  max-width: 90px;
+  display: block;
+  margin: 0 auto;
 }
 
 .c-search {
@@ -275,16 +302,9 @@ body {
   margin-top: 10px;
 }
 
-.weather-icon img {
-  max-width: 180px;
-  animation: weather-icon 2s linear infinite alternate;
-  text-align: center;
-}
-
-.c-weather__icon {
-  max-width: 80px;
-  display: block;
-  margin: 0 auto;
+.c-search__submit i,
+.c-search__location i {
+  cursor: pointer;
 }
 
 footer {
@@ -304,6 +324,11 @@ footer p {
   background-image: url("assets/images/circle-fill-black.svg");
   background-repeat: no-repeat;
   background-position: center;
+}
+
+footer i {
+  font-size: 12px;
+  color: #fac75a;
 }
 
 .github-link,

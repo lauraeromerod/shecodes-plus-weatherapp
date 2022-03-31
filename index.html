@@ -37,6 +37,7 @@
             <span class="ready-name">ready</span>
           </h1>
         </div>
+
         <div class="col-6 align-items-center">
           <form class="form-horizontal c-search mb-3">
             <input
@@ -72,6 +73,7 @@
             </h2>
           </div>
         </div>
+
         <div class="row align-items-center justify-content-between mb-4">
           <div class="col-12 col-md-4">
             <p class="error-message"></p>
@@ -98,16 +100,36 @@
 
           <div class="col-12 col-md-4">
             <div class="current-weather-wrapper">
-              <p class="current-temperature-feeling">
-                <i class="fa-solid fa-temperature-half fa-fade"></i
-                ><span></span>
-              </p>
-              <p class="current-humidity">
-                <i class="fa-solid fa-droplet fa-fade"></i><span></span>
-              </p>
-              <p class="current-wind">
-                <i class="fa-solid fa-wind fa-fade"></i><span></span>
-              </p>
+              <div>
+                <p class="current-temperature-feeling">
+                  <i class="fa-solid fa-temperature-half"></i><span></span>
+                  <sup class="scale-dot">·</sup>
+                  <span class="wrapper-category">feels like</span>
+                </p>
+                <p class="current-temperature-max">
+                  <i class="fa-solid fa-temperature-arrow-up"></i>
+                  <span></span>
+                  <sup class="scale-dot">·</sup>
+                  <span class="wrapper-category">highest</span>
+                </p>
+                <p class="current-temperature-min">
+                  <i class="fa-solid fa-temperature-arrow-down"></i>
+                  <span></span>
+                  <sup class="scale-dot">·</sup>
+                  <span class="wrapper-category">lowest</span>
+                </p>
+              </div>
+              <div>
+                <p class="current-humidity">
+                  <i class="fa-solid fa-droplet"></i><span></span>
+                </p>
+                <p class="current-visibility">
+                  <i class="fa-solid fa-eye"></i><span></span>
+                </p>
+                <p class="current-wind">
+                  <i class="fa-solid fa-wind"></i><span></span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -127,7 +149,7 @@
             href="https://github.com/lauraeromerod/shecodes-plus-weatherapp"
             >Coded</a
           >
-          with ❤ by
+          with <i class="fa-solid fa-heart fa-beat"></i> by
           <a
             target="_blank"
             class="profile-link"

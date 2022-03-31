@@ -12,7 +12,14 @@ const currentDescription = document.querySelector(
 const currentTemperatureFeeling = document.querySelector(
   ".current-temperature-feeling span"
 );
+const currentHighTemperature = document.querySelector(
+  ".current-temperature-max span"
+);
+const currentLowTemperature = document.querySelector(
+  ".current-temperature-min span"
+);
 const currentHumidity = document.querySelector(".current-humidity span");
+const currentVisibility = document.querySelector(".current-visibility span");
 const currentWind = document.querySelector(".current-wind span");
 
 const currentWeatherIcon = document.querySelector(".weather-icon img");
@@ -156,14 +163,16 @@ changeTemperatureNumber();
 responseContainer.style.display = "none";
 
 function getCurrentWeatherData(response) {
+  console.log(response);
   if (response.data && Object.keys(response.data).length > 0) {
-    const { name, sys, main, weather, wind } = response.data;
+    const { name, sys, main, weather, wind, visibility } = response.data;
     const responseCity = name;
     const responseCountry = sys.country;
     const responseTemperature = Math.round(main.temp);
     const responseWeatherDescription = weather[0].description;
     const responseTemperatureFeeling = Math.round(main.feels_like);
     const responseHumidity = main.humidity;
+    const responseVisibility = Math.round(visibility / 1000);
     const responseWind = Math.round(wind.speed * 3.6);
     const responseIcon = weather[0].icon;
     const iconObject = iconSwitcher(responseIcon);
@@ -171,7 +180,7 @@ function getCurrentWeatherData(response) {
     errorMessage.style.display = "none";
     responseContainer.style.display = "block";
     firstColumnWrapper.style.display = "block";
-    thirdColumnWrapper.style.display = "block";
+    thirdColumnWrapper.style.display = "flex";
     currentCity.textContent = responseCity;
     currentCountry.textContent = responseCountry;
     currentTemperature.textContent =
@@ -179,8 +188,9 @@ function getCurrentWeatherData(response) {
         ? `0${responseTemperature}`
         : responseTemperature;
     currentDescription.textContent = responseWeatherDescription;
-    currentTemperatureFeeling.textContent = ` ${responseTemperatureFeeling}°`;
+    currentTemperatureFeeling.textContent = ` ${responseTemperatureFeeling}`;
     currentHumidity.textContent = ` ${responseHumidity}%`;
+    currentVisibility.textContent = ` ${responseVisibility} km`;
     currentWind.textContent = ` ${responseWind} km/h`;
     currentWeatherIcon.setAttribute("src", iconObject.src);
     currentWeatherIcon.setAttribute("alt", iconObject.alt);
@@ -203,8 +213,11 @@ function getCurrentWeatherData(response) {
 function getForecastWeatherData(response) {
   const { daily } = response.data;
   forecastWrapper.innerHTML = "";
+  const responseHighestTemperature = Math.round(daily[0].temp.max);
+  const responseLowestTemperature = Math.round(daily[0].temp.min);
+  currentHighTemperature.textContent = responseHighestTemperature;
+  currentLowTemperature.textContent = responseLowestTemperature;
   for (let index = 1; index < daily.length - 1; index++) {
-    console.log(daily[index]);
     const { temp, weather, dt } = daily[index];
     const highTemperature = Math.round(temp.max);
     const lowTemperature = Math.round(temp.min);
@@ -214,6 +227,7 @@ function getForecastWeatherData(response) {
     const formattedDay = new Intl.DateTimeFormat("en-US", {
       weekday: "long",
     }).format(day);
+    const forecastDescription = weather[0].description;
 
     forecastWrapper.innerHTML += `<div class="col-6 col-md-4 mb-3">
     <div class="c-weather__box c-weather__box--${index}">
@@ -222,6 +236,7 @@ function getForecastWeatherData(response) {
       <span class="c-weather__high-temperature">${highTemperature}°</span>
       <span class="c-weather__low-temperature">${lowTemperature}°</span>
     </p>
+    <p class="c-weather__description">${forecastDescription}</p>
     <img src="${iconObject.src}" alt="${iconObject.alt}" class="c-weather__icon" />
   </div>
   </div>`;
@@ -280,33 +295,6 @@ currentLocationButton.addEventListener("click", function (event) {
   event.preventDefault();
   getWeatherByCurrentLocation();
 });
-
-/* const wrapperParentElement = document.querySelector(".current-weather-wrapper");
-
-function updateCurrentWeatherWrapper() {
-  removeChildren(wrapperParentElement);
-  wrapperParentElement.insertAdjacentHTML(
-    "afterbegin",
-    weatherWrapperTemplate()
-  );
-}
-
-function removeChildren(parent) {
-  parent.innerHTML = "";
-}
-
-function weatherWrapperTemplate() {
-  return `
-<p class="current-weather-title">be weather ready</p>
-<span class="current-weather-dot">··</span>
-<p class="current-weather-description">Cloudy</p>
-<span class="current-weather-dot">··</span>
-<p class="current-humidity">68% humidity</p>
-<span class="current-weather-dot">··</span>
-<p class="current-wind">18 km/h wind</p>
-<span class="current-weather-dot">··</span>
- `;
-} */
 
 const iconSwitcher = (icon) => {
   const iconPath = "assets/icons/";
@@ -377,11 +365,3 @@ const iconSwitcher = (icon) => {
       };
   }
 };
-
-/* function updateForecastIcons() {
-  forecastIcon.forEach((element) => {
-    iconSwitcher("", element);
-  });
-}
-
-updateForecastIcons(); */
