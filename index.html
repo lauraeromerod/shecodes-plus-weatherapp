@@ -11,24 +11,24 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=The+Girl+Next+Door&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" type="image/x-icon" href="/assets/cursor/saturn.png" />
+    <link rel="stylesheet" href="style.css" />
     <script
       src="https://kit.fontawesome.com/164f31a762.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="icon" type="image/x-icon" href="/assets/cursor/saturn.png" />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
   <body>
     <div class="container__weather">
       <div class="row align-items-center mb-5 mt-4">
-        <div class="col-6 align-items-start">
+        <div class="col-12 col-sm-6 align-items-start">
           <h1 class="app-name">
             <span class="be-name">be</span>
             <img src="assets/images/heart-black.svg" alt="decoration" />
@@ -38,7 +38,7 @@
           </h1>
         </div>
 
-        <div class="col-6 align-items-center">
+        <div class="col-12 col-sm-6 align-items-center">
           <form class="form-horizontal c-search mb-3">
             <input
               type="text"
@@ -60,13 +60,13 @@
         <div
           class="row align-items-start justify-content-between current-weather-header mb-4"
         >
-          <div class="col-12 col-md-8 text-start">
+          <div class="col-12 col-sm-8 text-start@sm text-center">
             <h1 class="current-place">
               <span class="current-city"></span>
               <span><sup class="current-country"></sup></span>
             </h1>
           </div>
-          <div class="col-12 col-md-4 text-end">
+          <div class="col-12 col-sm-4 text-end@sm text-center">
             <h2>
               <p class="current-time"></p>
               <p class="current-day"></p>
@@ -75,7 +75,7 @@
         </div>
 
         <div class="row align-items-center justify-content-between mb-4">
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-sm-4">
             <p class="error-message"></p>
             <div class="current-weather-data">
               <p class="current-temperature">
@@ -92,31 +92,37 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-sm-3 text-center current-weather-icon">
             <div class="weather-icon">
               <img src="" alt="" />
             </div>
           </div>
 
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-sm-5">
             <div class="current-weather-wrapper">
               <div>
                 <p class="current-temperature-feeling">
                   <i class="fa-solid fa-temperature-half"></i><span></span>
                   <sup class="scale-dot">·</sup>
-                  <span class="wrapper-category">feels like</span>
+                  <span class="wrapper-category wrapper-category__feel"
+                    >feels like</span
+                  >
                 </p>
                 <p class="current-temperature-max">
                   <i class="fa-solid fa-temperature-arrow-up"></i>
                   <span></span>
                   <sup class="scale-dot">·</sup>
-                  <span class="wrapper-category">highest</span>
+                  <span class="wrapper-category wrapper-category__high"
+                    >highest</span
+                  >
                 </p>
                 <p class="current-temperature-min">
                   <i class="fa-solid fa-temperature-arrow-down"></i>
                   <span></span>
                   <sup class="scale-dot">·</sup>
-                  <span class="wrapper-category">lowest</span>
+                  <span class="wrapper-category wrapper-category__low"
+                    >lowest</span
+                  >
                 </p>
               </div>
               <div>
@@ -159,11 +165,6 @@
         </p>
       </footer>
     </div>
-    <script
-      src="https://code.jquery.com/jquery-3.6.0.min.js"
-      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-      crossorigin="anonymous"
-    ></script>
     <script src="app.js"></script>
   </body>
 </html>

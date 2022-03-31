@@ -229,7 +229,7 @@ function getForecastWeatherData(response) {
     }).format(day);
     const forecastDescription = weather[0].description;
 
-    forecastWrapper.innerHTML += `<div class="col-6 col-md-4 mb-3">
+    forecastWrapper.innerHTML += `<div class="col-12 col-sm-6 mb-3">
     <div class="c-weather__box c-weather__box--${index}">
     <h3 class="c-weather__day c-weather__day--active">${formattedDay}</h3>
     <p class="c-weather__temperature">
