@@ -64,53 +64,12 @@ function setCurrentDate() {
 
 setCurrentDate();
 
-/* function setDay() {
-  let nextDays = document.querySelectorAll(".c-weather__day");
-  
-
-  for (let day = 0; day < 6; day++) {
-    let nextDayElement = nextDays[day]; // 6 elements c-weather__day
-
-    let nextDay = new Date();
-    nextDay.setDate(currentDate.getDate() + day + 1);
-
-    let nextDayName = new Intl.DateTimeFormat("en-US", {
-      weekday: "long",
-    }).format(nextDay);
-
-    nextDayElement.innerHTML = nextDayName;
-  }
-}
-setDay(); */
-
-/* let formattedCity = (city) => {
-  if (!city) {
-    return false;
-  }
-
-  let cityArray = city.split(" ");
-
-  const cities = [...cityArray]
-    .map((city) => {
-      return city.charAt(0).toUpperCase() + city.slice(1);
-    })
-    .join(" ");
-
-  return cities;
-}; */
-
 function changeTemperatureNumber() {
   let nextDaysTemperatures = document.querySelectorAll(
     ".c-weather__temperature span"
   );
 
-  const currentTemperatureSpan = document.querySelector(
-    ".current-temperature span"
-  );
-  changeTemperatureScale(
-    currentTemperatureSpan,
-    currentTemperatureSpan.textContent
-  );
+  changeTemperatureScale(".current-temperature span");
 
   for (
     let eachTemperature = 0;
@@ -123,42 +82,48 @@ function changeTemperatureNumber() {
       ""
     );
 
-    changeTemperatureScale(nexDayTemperatureElement, nexDayTemperatureNumber);
+    changeTemperatureScale(
+      `.${nexDayTemperatureElement.className.split(" ")[1]}`
+    );
   }
 }
 
 function convertToFahrenheit(temperature) {
-  return Math.round((temperature * 9) / 5 + 32);
+  const temperatureFahrenheit = Math.round((Number(temperature) * 9) / 5 + 32);
+  const formattedTemperature =
+    temperatureFahrenheit < 10 && temperatureFahrenheit > 0
+      ? `0${temperatureFahrenheit}`
+      : temperatureFahrenheit;
+  return formattedTemperature;
 }
 
 function convertToCelsius(temperature) {
-  return Math.round(((temperature - 32) * 5) / 9);
+  console.log(temperature);
+  const temperatureCelsius = Math.round(((Number(temperature) - 32) * 5) / 9);
+  const formattedTemperature =
+    temperatureCelsius < 10 && temperatureCelsius > 0
+      ? `0${temperatureCelsius}`
+      : temperatureCelsius;
+  return formattedTemperature;
 }
 
-function changeTemperatureScale(temperatureElement, temperatureText) {
+function changeTemperatureScale(temperatureElement) {
   const celsiusButton = document.querySelector(".celsius");
   const fahrenheitButton = document.querySelector(".fahrenheit");
 
   fahrenheitButton.addEventListener("click", function () {
-    temperatureElement.innerHTML = `${convertToFahrenheit(temperatureText)}
-    
-    ${
-      temperatureElement.classList.contains("current-temperature-number")
-        ? ""
-        : "°"
-    }`;
+    const element = document.querySelector(temperatureElement);
+    const defaultTemperature = element.getAttribute("data-temperature");
+    element.innerHTML = `${convertToFahrenheit(defaultTemperature)}`;
   });
 
   celsiusButton.addEventListener("click", function () {
-    temperatureElement.innerHTML = `${convertToCelsius(temperatureText)}${
-      temperatureElement.classList.contains("current-temperature-number")
-        ? ""
-        : "°"
-    }`;
+    const element = document.querySelector(temperatureElement);
+    const defaultTemperature = element.getAttribute("data-temperature");
+
+    element.innerHTML = defaultTemperature;
   });
 }
-
-changeTemperatureNumber();
 
 responseContainer.style.display = "none";
 
@@ -187,6 +152,7 @@ function getCurrentWeatherData(response) {
       responseTemperature < 10 && responseTemperature > 0
         ? `0${responseTemperature}`
         : responseTemperature;
+    currentTemperature.setAttribute("data-temperature", responseTemperature);
     currentDescription.textContent = responseWeatherDescription;
     currentTemperatureFeeling.textContent = ` ${responseTemperatureFeeling}`;
     currentHumidity.textContent = ` ${responseHumidity}%`;
@@ -234,8 +200,8 @@ function getForecastWeatherData(response) {
     <div>
     <h3 class="c-weather__day c-weather__day--active">${formattedDay}</h3>
     <p class="c-weather__temperature">
-      <span class="c-weather__high-temperature">${highTemperature}°</span>
-      <span class="c-weather__low-temperature">${lowTemperature}°</span>
+      <span class="c-weather__high-temperature c-weather-temperature-high--${index}" data-temperature="${highTemperature}">${highTemperature}</span><sup class="sup-high">°</sup>
+      <span class="c-weather__low-temperature c-weather-temperature-low--${index}" data-temperature="${lowTemperature}">${lowTemperature}</span><sup class="sup-low">°</sup>
     </p>
     </div>
     <p class="c-weather__description">${forecastDescription}</p>
@@ -243,6 +209,8 @@ function getForecastWeatherData(response) {
   </div>
   </div>`;
   }
+
+  changeTemperatureNumber();
 }
 
 function getAPIURL(baseURL, lat, lon) {

@@ -301,11 +301,13 @@ body {
   line-height: 1;
 }
 
-.c-weather__high-temperature {
+.c-weather__high-temperature,
+.sup-high {
   color: #8e6da0;
 }
 
-.c-weather__low-temperature {
+.c-weather__low-temperature,
+.sup-low {
   color: #eba613;
 }
 
