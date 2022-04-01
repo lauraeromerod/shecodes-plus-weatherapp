@@ -295,7 +295,7 @@ body {
 
 .c-weather__temperature {
   font-family: "The Girl Next Door";
-  font-size: 24px;
+  font-size: 26px;
   display: inline-block;
   margin-bottom: 0;
   line-height: 1;
@@ -306,7 +306,7 @@ body {
 }
 
 .c-weather__low-temperature {
-  color: #fac75a;
+  color: #eba613;
 }
 
 .c-weather__icon {
@@ -536,7 +536,7 @@ footer i {
     padding: 0;
   }
   .c-search__submit {
-    margin-right: 5px;
+    margin-right: 10px;
   }
 
   .current-weather-wrapper {
@@ -620,6 +620,6 @@ footer i {
   }
 
   .current-weather-wrapper {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
