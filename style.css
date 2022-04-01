@@ -555,7 +555,7 @@ footer i {
   }
 
   .c-search input[type="text"] {
-    width: 60%;
+    width: auto;
   }
 
   .app-name {
