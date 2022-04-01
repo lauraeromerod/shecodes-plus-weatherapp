@@ -30,7 +30,7 @@ See it live [here](https://papaya-custard-4a14b7.netlify.app/) 🎉
  🎯 [One Call API](https://openweathermap.org/api/one-call-api)  
 
  🔮 [Bootstrap](https://getbootstrap.com/)  
- 💅🏼 [Cute weather icons](https://icons8.com/)
+ 💅🏼 [Cute weather icons](https://icons8.com/)   
  🍬 [Font Awesome](https://fontawesome.com/)
  
 
