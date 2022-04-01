@@ -535,12 +535,16 @@ footer i {
     font-size: 20px;
     padding: 0;
   }
+  .c-search__submit {
+   margin-right: 5px;
+  }
 
   .current-weather-wrapper {
     font-size: 14px;
   }
   .c-search input[type="text"] {
     width: 180px;
+    margin-right: 8px;
   }
 }
 
