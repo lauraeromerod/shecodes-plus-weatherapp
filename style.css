@@ -533,6 +533,7 @@ footer i {
   .c-search__submit,
   .c-search__location {
     font-size: 20px;
+    padding: 0;
   }
 
   .current-weather-wrapper {
