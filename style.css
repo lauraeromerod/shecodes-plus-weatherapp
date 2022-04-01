@@ -511,6 +511,10 @@ footer i {
   .fahrenheit {
     font-size: 18px;
   }
+
+  .c-search input[type="text"] {
+    width: auto;
+  }
 }
 
 @media screen and (max-width: 660px) {
@@ -530,6 +534,11 @@ footer i {
     font-size: 14px;
   }
 
+  .c-search input[type="text"] {
+    margin-right: 12px;
+    width: 65%;
+  }
+
   .c-search__submit,
   .c-search__location {
     font-size: 20px;
@@ -542,10 +551,6 @@ footer i {
   .current-weather-wrapper {
     font-size: 14px;
   }
-  .c-search input[type="text"] {
-    width: 180px;
-    margin-right: 12px;
-  }
 }
 
 @media screen and (max-width: 580px) {
@@ -557,10 +562,6 @@ footer i {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-  }
-
-  .c-search input[type="text"] {
-    width: auto;
   }
 
   .app-name {
