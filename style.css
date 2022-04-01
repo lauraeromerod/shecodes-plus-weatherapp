@@ -336,7 +336,7 @@ body {
   line-height: 2;
   color: #fac75a;
   padding: 2px 10px;
-  margin-right: 5px;
+  margin-right: 12px;
   border: 1px solid #fac75a;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -413,11 +413,16 @@ body {
   appearance: none;
   border: none;
   font-size: 26px;
+  padding: 0;
 }
 
 .c-search__submit i,
 .c-search__location i {
   cursor: pointer;
+}
+
+.c-search__submit {
+  margin-right: 10px;
 }
 
 footer {
@@ -535,17 +540,12 @@ footer i {
   }
 
   .c-search input[type="text"] {
-    margin-right: 12px;
     width: 65%;
   }
 
   .c-search__submit,
   .c-search__location {
     font-size: 20px;
-    padding: 0;
-  }
-  .c-search__submit {
-    margin-right: 10px;
   }
 
   .current-weather-wrapper {
